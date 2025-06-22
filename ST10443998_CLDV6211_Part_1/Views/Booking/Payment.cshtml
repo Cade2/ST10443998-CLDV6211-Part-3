@@ -1,0 +1,41 @@
+﻿@model ST10443998_CLDV6211_POE.Models.Payment
+
+@{
+    ViewData["Title"] = "Payment";
+    var bookingId = ViewBag.BookingId;
+}
+
+<h2>Step 3: Enter Payment Details</h2>
+
+@Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+<<form asp-action="Payment" method="post">
+    <input type="hidden" name="customerId" value="@ViewBag.CustomerId" />
+    <input type="hidden" name="eventId" value="@ViewBag.EventId" />
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <div class="form-group">
+        <label asp-for="Amount"></label>
+        <input asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PaymentDate"></label>
+        <input asp-for="PaymentDate" class="form-control" type="date" />
+        <span asp-validation-for="PaymentDate" class="text-danger"></span>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-success">Complete Booking</button>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

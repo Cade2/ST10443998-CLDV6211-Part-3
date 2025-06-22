@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ST10443998_CLDV6211_POE.Models.Customer>
+
+<h2>Customers</h2>
+<a class="btn btn-primary" asp-controller="Booking" asp-action="Customer">Add A New Customer</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FullName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>
+                    <a asp-controller="Booking" asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-controller="Booking" asp-action="Delete" asp-route-id="@item.CustomerId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

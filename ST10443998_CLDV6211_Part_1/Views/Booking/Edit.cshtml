@@ -1,0 +1,100 @@
+﻿@model ST10443998_CLDV6211_POE.Models.Booking
+
+@{
+    ViewData["Title"] = "Edit Booking";
+}
+
+<h2>Edit Booking</h2>
+
+@Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="BookingId" />
+
+    <h4>🧍 Customer Details</h4>
+    <div class="form-group">
+        <label>Full Name</label>
+        <input class="form-control" name="Customer.FullName" value="@Model.Customer?.FullName" />
+        <span asp-validation-for="Customer.FullName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" name="Customer.Email" value="@Model.Customer?.Email" />
+        <span asp-validation-for="Customer.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Phone Number</label>
+        <input class="form-control" name="Customer.PhoneNumber" value="@Model.Customer?.PhoneNumber" />
+        <span asp-validation-for="Customer.PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <h4>📅 Event Details</h4>
+    <div class="form-group">
+        <label>Event Name</label>
+        <input name="Event.EventName" value="@Model.Event?.EventName" class="form-control" />
+        <span asp-validation-for="Event.EventName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Event Date</label>
+        <input name="Event.EventDate" value="@Model.Event?.EventDate.ToString("yyyy-MM-dd")" class="form-control" type="date" />
+        <span asp-validation-for="Event.EventDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Event Time</label>
+        <input name="Event.EventTime" value="@Model.Event?.EventTime.ToString(@"hh\:mm")" class="form-control" type="time" />
+        <span asp-validation-for="Event.EventTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea name="Event.Description" class="form-control">@Model.Event?.Description</textarea>
+        <span asp-validation-for="Event.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Event Type</label>
+        <select name="Event.EventTypeId" class="form-control"
+                asp-items="@(new SelectList(ViewBag.EventTypes, "EventTypeId", "TypeName", Model.Event?.EventTypeId))">
+            <option value="">-- Select Event Type --</option>
+        </select>
+        <span asp-validation-for="Event.EventTypeId" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label>Venue</label>
+        <select name="Event.VenueId" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Venues, "VenueId", "VenueName", Model.Event?.VenueId))">
+            <option value="">-- Select Venue --</option>
+        </select>
+        <span asp-validation-for="Event.VenueId" class="text-danger"></span>
+    </div>
+
+
+    <h4>💳 Payment Details</h4>
+    <div class="form-group">
+        <label>Amount</label>
+        <input name="Payment.Amount" value="@Model.Payment?.Amount" class="form-control" />
+        <span asp-validation-for="Payment.Amount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Payment Date</label>
+        <input name="Payment.PaymentDate" value="@Model.Payment?.PaymentDate.ToString("yyyy-MM-dd")" class="form-control" type="date" />
+        <span asp-validation-for="Event.EventDate" class="text-danger"></span>
+    </div>
+
+    <h4>🗓️ Booking Info</h4>
+    <div class="form-group">
+        <label asp-for="BookingDate"></label>
+        <input asp-for="BookingDate" class="form-control" type="date" />
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,27 @@
+﻿@model ST10443998_CLDV6211_POE.Models.Booking
+
+<h2>Booking Details</h2>
+<hr />
+
+<h4>🧍 Customer</h4>
+<p><strong>Name:</strong> @Model.Customer?.FullName</p>
+<p><strong>Email:</strong> @Model.Customer?.Email</p>
+<p><strong>Phone:</strong> @Model.Customer?.PhoneNumber</p>
+
+<h4>📅 Event</h4>
+<p><strong>Event Name:</strong> @Model.Event?.EventName</p>
+<p><strong>Date:</strong> @Model.Event?.EventDate.ToShortDateString()</p>
+<p><strong>Time:</strong> @Model.Event?.EventTime.ToString(@"hh\:mm")</p>
+<p><strong>Description:</strong> @Model.Event?.Description</p>
+<p><strong>Type:</strong> @Model.Event?.EventType?.TypeName</p>
+<p><strong>Venue:</strong> @Model.Event?.Venue?.VenueName</p>
+
+<h4>💳 Payment</h4>
+<p><strong>Amount:</strong> @($"R{Model.Payment?.Amount}")</p>
+<p><strong>Payment Date:</strong> @Model.Payment?.PaymentDate.ToShortDateString()</p>
+
+<h4>🗓️ Booking</h4>
+<p><strong>Booking ID:</strong> @Model.BookingId</p>
+<p><strong>Booking Date:</strong> @Model.BookingDate.ToShortDateString()</p>
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

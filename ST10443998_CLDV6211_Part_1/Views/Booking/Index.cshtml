@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ST10443998_CLDV6211_POE.Models.Booking>
+
+@{
+    ViewData["Title"] = "All Bookings";
+}
+
+<h2>All Bookings</h2>
+
+<!-- 🔍 Toggle Search Button -->
+<button type="button" class="btn btn-outline-primary mb-2" onclick="toggleSearch()">
+    <i class="bi bi-search"></i> Search
+</button>
+
+<!-- 🔎 Hidden Search Form -->
+<form asp-action="Index" method="get" id="searchForm" class="form-inline mb-3" style="display: none;">
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control"
+               placeholder="Search by BookingID or Event Name"
+               value="@(ViewContext.HttpContext.Request.Query["searchString"])"
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Go</button>
+        </div>
+    </div>
+</form>
+
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<p>
+    <a class="btn btn-primary" asp-controller="Booking" asp-action="Customer">Make a Booking</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>Customer</th>
+            <th>Event</th>
+            <th>Venue</th>
+            <th>Booking Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.BookingId</td>
+                <td>@booking.Customer?.FullName</td>
+                <td>@booking.Event?.EventName</td>
+                <td>@booking.Event?.Venue?.VenueName</td>
+                <td>@booking.BookingDate.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@booking.BookingId" class="btn btn-info btn-sm">View</a>
+                    <a asp-action="Edit" asp-route-id="@booking.BookingId" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@booking.BookingId" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function toggleSearch() {
+            const form = document.getElementById('searchForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+}

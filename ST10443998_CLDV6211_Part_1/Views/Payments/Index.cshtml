@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ST10443998_CLDV6211_POE.Models.Payment>
+
+<h2>Payments</h2>
+<a class="btn btn-primary" asp-controller="Booking" asp-action="Customer">Add A New Payment</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Payment Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>R @item.Amount</td>
+                <td>@item.PaymentDate.ToShortDateString()</td>
+                <td>
+                    <a asp-controller="Booking" asp-action="Edit" asp-route-id="@item.PaymentId" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-controller="Booking" asp-action="Delete" asp-route-id="@item.PaymentId" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

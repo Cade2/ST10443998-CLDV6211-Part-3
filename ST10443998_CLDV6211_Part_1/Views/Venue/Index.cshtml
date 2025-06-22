@@ -1,0 +1,56 @@
+﻿@model List<ST10443998_CLDV6211_POE.Models.Venue>
+
+@{
+    ViewData["Title"] = "Venue List";
+}
+
+<h1>Venues</h1>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Add New Venue</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Capacity</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.VenueName</td>
+                <td>@item.Location</td>
+                <td>@item.Capacity</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" alt="Venue Image" width="100" />
+                    }
+                    else
+                    {
+                        <span>No image</span>
+                    }
+
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.VenueId" class="btn btn-info btn-sm">View</a>
+                    <a asp-action="Edit" asp-route-id="@item.VenueId" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.VenueId" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,73 @@
+﻿@model ST10443998_CLDV6211_POE.Models.Event
+
+@{
+    ViewData["Title"] = "Event Info";
+    var customerId = ViewBag.CustomerId;
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+
+<h2>Step 2: Enter Event Details</h2>
+
+@Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+<form asp-action="Event" method="post">
+    <input type="hidden" name="customerId" value="@customerId" />
+
+    <div class="form-group">
+        <label asp-for="EventName"></label>
+        <input asp-for="EventName" class="form-control" />
+        <span asp-validation-for="EventName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EventDate"></label>
+        <input asp-for="EventDate" class="form-control" type="date" />
+        <span asp-validation-for="EventDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EventTime"></label>
+        <input asp-for="EventTime" class="form-control" type="time" />
+        <span asp-validation-for="EventTime" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VenueId"></label>
+        <select asp-for="VenueId" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Venues, "VenueId", "VenueName"))">
+            <option value="">-- Select Venue --</option>
+        </select>
+        <span asp-validation-for="VenueId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EventTypeId"></label>
+        <select asp-for="EventTypeId" class="form-control"
+                asp-items="@(new SelectList(ViewBag.EventTypes, "EventTypeId", "TypeName"))">
+            <option value="">-- Select Event Type --</option>
+        </select>
+        <span asp-validation-for="EventTypeId" class="text-danger"></span>
+    </div>
+
+
+    <br />
+    <button type="submit" class="btn btn-primary">Continue to Payment</button>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
