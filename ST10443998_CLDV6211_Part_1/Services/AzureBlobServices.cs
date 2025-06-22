@@ -6,7 +6,7 @@ namespace ST10443998_CLDV6211_POE.Services
     public class AzureBlobService
     {
         private readonly BlobServiceClient _blobServiceClient;
-        private readonly string _containerName = "st10443998-eventease-images"; // or "eventimages" if you're handling events
+        private readonly string _containerName = "st10443998-cldv6211-blob"; // or "eventimages" if you're handling events
 
         public AzureBlobService(IConfiguration configuration)
         {

@@ -14,7 +14,7 @@ namespace ST10443998_CLDV6211_POE.Controllers
             _db = db;
         }
 
-        public IActionResult Index(string searchString)
+        public IActionResult Index(string searchString, int? eventTypeId, DateTime? startDate, DateTime? endDate, bool? isAvailable)
         {
             var bookings = _db.Bookings
                 .Include(b => b.Customer)
@@ -26,14 +26,27 @@ namespace ST10443998_CLDV6211_POE.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 searchString = searchString.ToLower();
-
                 bookings = bookings.Where(b =>
                     b.BookingId.ToString().Contains(searchString) ||
                     b.Event.EventName.ToLower().Contains(searchString));
             }
 
+            if (eventTypeId.HasValue)
+                bookings = bookings.Where(b => b.Event.EventTypeId == eventTypeId.Value);
+
+            if (startDate.HasValue)
+                bookings = bookings.Where(b => b.Event.EventDate >= startDate.Value);
+
+            if (endDate.HasValue)
+                bookings = bookings.Where(b => b.Event.EventDate <= endDate.Value);
+
+            if (isAvailable.HasValue)
+                bookings = bookings.Where(b => b.Event.Venue.IsAvailable == isAvailable.Value);
+
+            ViewBag.EventTypes = _db.EventTypes.ToList();
             return View(bookings.ToList());
         }
+
 
 
         [HttpGet]

@@ -12,8 +12,8 @@ using ST10443998_CLDV6211_POE.Data;
 namespace ST10443998_CLDV6211_POE.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250510094442_InitCommit")]
-    partial class InitCommit
+    [Migration("20250622193804_AddVenueAvailability")]
+    partial class AddVenueAvailability
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,6 +97,9 @@ namespace ST10443998_CLDV6211_POE.Migrations
                     b.Property<string>("EventName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("EventTime")
+                        .HasColumnType("time");
 
                     b.Property<int>("EventTypeId")
                         .HasColumnType("int");
@@ -194,8 +197,10 @@ namespace ST10443998_CLDV6211_POE.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -219,7 +224,7 @@ namespace ST10443998_CLDV6211_POE.Migrations
                         .IsRequired();
 
                     b.HasOne("ST10443998_CLDV6211_POE.Models.Event", "Event")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("EventId");
 
                     b.Navigation("Customer");
@@ -263,6 +268,11 @@ namespace ST10443998_CLDV6211_POE.Migrations
                 });
 
             modelBuilder.Entity("ST10443998_CLDV6211_POE.Models.Customer", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("ST10443998_CLDV6211_POE.Models.Event", b =>
                 {
                     b.Navigation("Bookings");
                 });

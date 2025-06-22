@@ -6,22 +6,57 @@
 
 <h2>All Bookings</h2>
 
-<!-- 🔍 Toggle Search Button -->
-<button type="button" class="btn btn-outline-primary mb-2" onclick="toggleSearch()">
-    <i class="bi bi-search"></i> Search
-</button>
-
-<!-- 🔎 Hidden Search Form -->
-<form asp-action="Index" method="get" id="searchForm" class="form-inline mb-3" style="display: none;">
-    <div class="input-group">
-        <input type="text" name="searchString" class="form-control"
-               placeholder="Search by BookingID or Event Name"
-               value="@(ViewContext.HttpContext.Request.Query["searchString"])"
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">Go</button>
-        </div>
+<div class="card mb-4">
+    <div class="card-header">
+        🔍 Search & Filter Bookings
     </div>
-</form>
+    <div class="card-body">
+        <form asp-action="Index" method="get">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="searchString">Keyword</label>
+                    <input type="text" name="searchString" class="form-control" placeholder="Search BookingID or Event"
+                           value="@ViewContext.HttpContext.Request.Query["searchString"]" />
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="eventTypeId">Event Type</label>
+                    <select name="eventTypeId" class="form-control">
+                        <option value="">All Event Types</option>
+                        @foreach (var type in ViewBag.EventTypes)
+                        {
+                            <option value="@type.EventTypeId">@type.TypeName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" name="startDate" class="form-control" />
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="endDate">End Date</label>
+                    <input type="date" name="endDate" class="form-control" />
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="isAvailable">Venue Availability</label>
+                    <select name="isAvailable" class="form-control">
+                        <option value="">All Venues</option>
+                        <option value="true">Available Only</option>
+                        <option value="false">Unavailable Only</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-1 align-self-end">
+                    <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 
 @if (TempData["ErrorMessage"] != null)

@@ -14,6 +14,9 @@ namespace ST10443998_CLDV6211_POE.Models
         public string Location { get; set; }
         [Range(1, 10000, ErrorMessage = "Capacity must be between 1 and 10,000")]
         public int Capacity { get; set; }
+        [Display(Name = "Available?")]
+        public bool IsAvailable { get; set; }
+
         public string? ImageUrl { get; set; }
 
         public ICollection<Event> Events { get; set; }

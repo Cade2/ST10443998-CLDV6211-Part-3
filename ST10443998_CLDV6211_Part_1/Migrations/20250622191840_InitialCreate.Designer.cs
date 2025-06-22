@@ -12,8 +12,8 @@ using ST10443998_CLDV6211_POE.Data;
 namespace ST10443998_CLDV6211_POE.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250513153239_Added event time")]
-    partial class Addedeventtime
+    [Migration("20250622191840_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
